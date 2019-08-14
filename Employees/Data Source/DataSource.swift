@@ -27,7 +27,7 @@ class DataSource: NSObject {
     }
     
      lazy var fetchedResultsController: NSFetchedResultsController<Employee> = {
-        let fetchRequest = NSFetchRequest<Employee>(entityName:"Employee")
+        let fetchRequest = NSFetchRequest<Employee>(entityName:Constants.employeeEntityname)
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending:true)]
         
         let controller = NSFetchedResultsController(fetchRequest: fetchRequest,

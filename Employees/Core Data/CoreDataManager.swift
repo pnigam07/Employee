@@ -14,7 +14,7 @@ class CoreDataManger {
     func deleteAll(){
         let taskContext = CoreDataStack.shared.backgroundTaskContext()
         taskContext.performAndWait {
-            let matchingEpisodeRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Employee")
+            let matchingEpisodeRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Constants.employeeEntityname)
            
             let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: matchingEpisodeRequest)
             batchDeleteRequest.resultType = .resultTypeObjectIDs
@@ -35,7 +35,7 @@ class CoreDataManger {
     }
     }
     
-    func insertEmployee(employeeDict: Dictionary<String, String>) {
+   static func insertEmployee(employeeViewState: EmployeeViewState) {
         
         let taskContext = CoreDataStack.shared.persistentContainer.newBackgroundContext()
         taskContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
@@ -43,13 +43,13 @@ class CoreDataManger {
         
         taskContext.performAndWait {
             
-        guard let emp =  NSEntityDescription.insertNewObject(forEntityName: "Employee", into: taskContext) as? Employee else {
+        guard let emp =  NSEntityDescription.insertNewObject(forEntityName: Constants.employeeEntityname, into: taskContext) as? Employee else {
                 print("Error: Failed to create a new Employee object!")
                 return
             }
             
             do {
-                try emp.update(with:employeeDict)
+                try emp.update(with:employeeViewState)
             } catch {
                 print("Error: \(error)\nThe quake object will be deleted.")
                 taskContext.delete(emp)

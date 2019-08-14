@@ -31,4 +31,20 @@ class Employee: NSManagedObject {
         self.married = married
     }
     
+    func update(with viewState: EmployeeViewState) throws {
+        guard let name = viewState.name,
+            let email = viewState.email,
+            let city = viewState.city,
+            let married = viewState.married
+            
+            else {
+                throw NSError(domain: "", code: 100, userInfo: nil)
+        }
+        
+        self.name = name
+        self.email = email
+        self.city = city
+        self.married = married
+    }
+    
 }

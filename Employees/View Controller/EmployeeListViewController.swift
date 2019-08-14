@@ -40,7 +40,7 @@ class EmployeeListViewController: UIViewController {
     func setupNavigation() {
         self.navigationController?.navigationBar.backgroundColor = .green
         navigationItem.rightBarButtonItem = NavigationBarFactory.setupSystemBarButton(with: .add, target: self, action: #selector(moveToAdd))
-        self.title = "Emplouyee List"
+        self.title = "Employees"
     }
     
     func setUpDelegates() {
@@ -58,21 +58,34 @@ class EmployeeListViewController: UIViewController {
     }
     
     func insert(){
-        let dict = ["name":"pankaj","email":"aa@fd.com","city":"Bangalore", "married":"true"]
-        
-        let cc =  CoreDataManger()
-        cc.insertEmployee(employeeDict: dict)
+//        let dict = ["name":"pankaj","email":"aa@fd.com","city":"Bangalore", "married":"true"]
+//
+//        let cc =  CoreDataManger()
+//        cc.insertEmployee(employeeDict: dict)
     }
     
     @objc func moveToAdd() {
-        insert()
+        navigationController?.pushViewController(newEmployeeViewController, animated: true)
+     //   insert()
     }
+   
+    fileprivate lazy var newEmployeeViewController: AddNewEmployeeViewController = {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc: AddNewEmployeeViewController = storyboard.instantiateViewController(withIdentifier: "newEmployee") as! AddNewEmployeeViewController
+        return vc
+    }()
+    
+    fileprivate lazy var editViewController: EmployeeDetailViewController = {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc: EmployeeDetailViewController = storyboard.instantiateViewController(withIdentifier: "editEmployee") as! EmployeeDetailViewController
+        return vc
+    }()
 }
 
 extension EmployeeListViewController: AdaptorDelegate {
     
     func navigatToEditView(viewState: EmployeeViewState) {
-        let editViewController = EditEmployeeViewController(viewState: viewState)
+        editViewController.viewState = viewState
         navigationController?.pushViewController(editViewController, animated: true)
     }
 }

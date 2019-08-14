@@ -10,12 +10,12 @@ import UIKit
 
 class NavigationBarFactory: NSObject {
     
-    static func setupBarButton(with image: UIImage?,
+    static func setupBarButton(title: String,
                                target: Any?,
                                action: Selector?,
                                renderingMode: UIImage.RenderingMode = .automatic) -> UIBarButtonItem {
         let barButton = UIBarButtonItem(
-            image: image?.withRenderingMode(renderingMode),
+            title: title,
             style: .plain,
             target: target,
             action: action
@@ -32,7 +32,7 @@ class NavigationBarFactory: NSObject {
         return barButton
     }
     
-    static func setuBarButtonWithTitle(title:String) -> UIBarButtonItem {
+    static func setuBackBarButtonWithTitle(title:String) -> UIBarButtonItem {
         let barButton = UIBarButtonItem(
             title: title,
             style: .plain,
