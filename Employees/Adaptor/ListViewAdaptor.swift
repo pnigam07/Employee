@@ -44,6 +44,7 @@ extension ListViewAdaptor: UITableViewDataSource {
         
         let cell = CellFactory.cell(forIndexPath: indexPath, forTableView: tableView) as? EmployeeListTableViewCell
         cell?.update(viewState: employee)
+        cell?.contentView.backgroundColor = .white
         return cell ?? UITableViewCell.init(style: .default, reuseIdentifier: "cell1")
     }
 }
