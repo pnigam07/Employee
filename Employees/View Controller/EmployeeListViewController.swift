@@ -40,7 +40,7 @@ class EmployeeListViewController: UIViewController {
     func setupNavigation() {
         self.navigationController?.navigationBar.backgroundColor = .green
         navigationItem.rightBarButtonItem = NavigationBarFactory.setupSystemBarButton(with: .add, target: self, action: #selector(moveToAdd))
-        self.title = "Emplouyee List"
+        self.title = "Employee List"
     }
     
     func setUpDelegates() {
@@ -65,14 +65,27 @@ class EmployeeListViewController: UIViewController {
     }
     
     @objc func moveToAdd() {
-        insert()
+        navigationController?.pushViewController(newEmployeeViewController, animated: true)
+     //   insert()
     }
+   
+    fileprivate lazy var newEmployeeViewController: AddNewEmployeeViewController = {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc: AddNewEmployeeViewController = storyboard.instantiateViewController(withIdentifier: "newEmployee") as! AddNewEmployeeViewController
+        return vc
+    }()
+    
+    fileprivate lazy var editViewController: EditEmployeeViewController = {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc: EditEmployeeViewController = storyboard.instantiateViewController(withIdentifier: "editEmployee") as! EditEmployeeViewController
+        return vc
+    }()
 }
 
 extension EmployeeListViewController: AdaptorDelegate {
     
     func navigatToEditView(viewState: EmployeeViewState) {
-        let editViewController = EditEmployeeViewController(viewState: viewState)
+        editViewController.viewState = viewState
         navigationController?.pushViewController(editViewController, animated: true)
     }
 }

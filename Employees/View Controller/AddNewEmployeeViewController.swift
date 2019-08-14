@@ -1,14 +1,14 @@
 //
-//  EditEmployeeViewController.swift
+//  AddNewEmployeeViewController.swift
 //  Employees
 //
-//  Created by pankaj on 8/13/19.
+//  Created by pankaj on 8/14/19.
 //  Copyright © 2019 Nigam. All rights reserved.
 //
 
 import UIKit
 
-class EditEmployeeViewController: UIViewController {
+class AddNewEmployeeViewController: UIViewController {
     
     private lazy var cityPicker = UIPickerView()
     private lazy var marritalStatusPicker = UIPickerView()
@@ -40,7 +40,7 @@ class EditEmployeeViewController: UIViewController {
         }
     }
     
-    func validate() -> Bool {
+    func isValidateData() -> Bool {
         if  nameTextField.text?.trimmingCharacters(in: .whitespaces).count ?? 0 < 6 {
             return false
         }
@@ -53,7 +53,7 @@ class EditEmployeeViewController: UIViewController {
         if cityTextField.text?.trimmingCharacters(in: .whitespaces).count ?? 0 < 4 {
             return false
         }
-      
+        
         return true
     }
     
@@ -65,25 +65,31 @@ class EditEmployeeViewController: UIViewController {
     }
     
     @objc func save() {
-        print("chal be")
+        if isValidateData() {
+            let dict = ["name":nameTextField.text!,
+                        "email":emailTextField.text!,
+                        "city":cityTextField.text!,
+                        "married":mariatalStatus.text!]
+            let cc =  CoreDataManger()
+            cc.insertEmployee(employeeDict: dict)
+            self.navigationController?.popViewController(animated: true)
+        }
+        else {
+       
+            let alert = Utils.getAlert(withMessage: "Some thing is not right")
+            self.present(alert, animated: true, completion: nil)
+        }
     }
-
+    
     override func viewDidLoad() {
         
         navigationItem.rightBarButtonItem = NavigationBarFactory.setupBarButton(title: "Save",
                                                                                 target: self,
                                                                                 action: #selector(save))
-        
         name.text = "Name: "
         email.text = "Email: "
         mariatalStatus.text = "Married: "
         city.text = "City: "
-        
-        nameTextField.text = viewState?.name
-        emailTextField.text = viewState?.email
-        mariatalStatusTextField.text = viewState?.married
-        cityTextField.text = viewState?.city
-        
     }
 }
 
@@ -91,11 +97,11 @@ class EditEmployeeViewController: UIViewController {
 
 // MARK: UIPickerViewDelegate, UIPickerViewDataSource
 
-extension EditEmployeeViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+extension AddNewEmployeeViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-       if pickerView == cityPicker || pickerView == marritalStatusPicker {
+        if pickerView == cityPicker || pickerView == marritalStatusPicker {
             return 1
-          }
+        }
         return 0
     }
     
@@ -130,3 +136,4 @@ extension EditEmployeeViewController: UIPickerViewDelegate, UIPickerViewDataSour
         }
     }
 }
+

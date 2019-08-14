@@ -25,6 +25,12 @@
 		2CDEBF692301D27900AF9CE4 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDEBF682301D27900AF9CE4 /* CoreDataManager.swift */; };
 		2CDEBF6B2301EE9400AF9CE4 /* CellFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDEBF6A2301EE9400AF9CE4 /* CellFactory.swift */; };
 		2CDEBF762302091300AF9CE4 /* EditEmployeeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDEBF752302091300AF9CE4 /* EditEmployeeViewController.swift */; };
+		2CDEBF782302F31A00AF9CE4 /* EditEmployeeTableViewAdaptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDEBF772302F31A00AF9CE4 /* EditEmployeeTableViewAdaptor.swift */; };
+		2CDEBF7A23033E8E00AF9CE4 /* EditEmployeeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDEBF7923033E8E00AF9CE4 /* EditEmployeeTableViewCell.swift */; };
+		2CDEBF7C2303460800AF9CE4 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDEBF7B2303460800AF9CE4 /* Constants.swift */; };
+		2CDEBF7F2303763200AF9CE4 /* EditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDEBF7E2303763200AF9CE4 /* EditViewModel.swift */; };
+		2CDEBF8323038E0300AF9CE4 /* AddNewEmployeeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDEBF8223038E0300AF9CE4 /* AddNewEmployeeViewController.swift */; };
+		2CDEBF86230392F300AF9CE4 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDEBF85230392F300AF9CE4 /* Utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +66,12 @@
 		2CDEBF682301D27900AF9CE4 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		2CDEBF6A2301EE9400AF9CE4 /* CellFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellFactory.swift; sourceTree = "<group>"; };
 		2CDEBF752302091300AF9CE4 /* EditEmployeeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditEmployeeViewController.swift; sourceTree = "<group>"; };
+		2CDEBF772302F31A00AF9CE4 /* EditEmployeeTableViewAdaptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditEmployeeTableViewAdaptor.swift; sourceTree = "<group>"; };
+		2CDEBF7923033E8E00AF9CE4 /* EditEmployeeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditEmployeeTableViewCell.swift; sourceTree = "<group>"; };
+		2CDEBF7B2303460800AF9CE4 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		2CDEBF7E2303763200AF9CE4 /* EditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewModel.swift; sourceTree = "<group>"; };
+		2CDEBF8223038E0300AF9CE4 /* AddNewEmployeeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewEmployeeViewController.swift; sourceTree = "<group>"; };
+		2CDEBF85230392F300AF9CE4 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +113,8 @@
 		2CDEBF31230166F800AF9CE4 /* Employees */ = {
 			isa = PBXGroup;
 			children = (
+				2CDEBF84230392DF00AF9CE4 /* Utils */,
+				2CDEBF7D2303461100AF9CE4 /* Constant */,
 				2CDEBF6C2302022E00AF9CE4 /* Core Data */,
 				2CDEBF742302077200AF9CE4 /* App Delegate */,
 				2CDEBF6D2302024900AF9CE4 /* Core */,
@@ -133,6 +147,7 @@
 			children = (
 				2CDEBF34230166F800AF9CE4 /* EmployeeListViewController.swift */,
 				2CDEBF752302091300AF9CE4 /* EditEmployeeViewController.swift */,
+				2CDEBF8223038E0300AF9CE4 /* AddNewEmployeeViewController.swift */,
 			);
 			path = "View Controller";
 			sourceTree = "<group>";
@@ -159,6 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				2CDEBF55230181A400AF9CE4 /* EmployeeListTableViewCell.swift */,
+				2CDEBF7923033E8E00AF9CE4 /* EditEmployeeTableViewCell.swift */,
 				2CDEBF6A2301EE9400AF9CE4 /* CellFactory.swift */,
 			);
 			path = Cell;
@@ -176,6 +192,7 @@
 			isa = PBXGroup;
 			children = (
 				2CDEBF5B2301A99A00AF9CE4 /* ListViewModel.swift */,
+				2CDEBF7E2303763200AF9CE4 /* EditViewModel.swift */,
 			);
 			path = "View Model";
 			sourceTree = "<group>";
@@ -192,6 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				2CDEBF5723019C5000AF9CE4 /* ListViewAdaptor.swift */,
+				2CDEBF772302F31A00AF9CE4 /* EditEmployeeTableViewAdaptor.swift */,
 			);
 			path = Adaptor;
 			sourceTree = "<group>";
@@ -202,6 +220,22 @@
 				2CDEBF32230166F800AF9CE4 /* AppDelegate.swift */,
 			);
 			path = "App Delegate";
+			sourceTree = "<group>";
+		};
+		2CDEBF7D2303461100AF9CE4 /* Constant */ = {
+			isa = PBXGroup;
+			children = (
+				2CDEBF7B2303460800AF9CE4 /* Constants.swift */,
+			);
+			path = Constant;
+			sourceTree = "<group>";
+		};
+		2CDEBF84230392DF00AF9CE4 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				2CDEBF85230392F300AF9CE4 /* Utils.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -306,15 +340,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				2CDEBF3B230166F800AF9CE4 /* Employees.xcdatamodeld in Sources */,
+				2CDEBF7C2303460800AF9CE4 /* Constants.swift in Sources */,
 				2CDEBF602301B5B200AF9CE4 /* Employee.swift in Sources */,
 				2CDEBF35230166F800AF9CE4 /* EmployeeListViewController.swift in Sources */,
+				2CDEBF7A23033E8E00AF9CE4 /* EditEmployeeTableViewCell.swift in Sources */,
+				2CDEBF782302F31A00AF9CE4 /* EditEmployeeTableViewAdaptor.swift in Sources */,
+				2CDEBF7F2303763200AF9CE4 /* EditViewModel.swift in Sources */,
 				2CDEBF5C2301A99A00AF9CE4 /* ListViewModel.swift in Sources */,
 				2CDEBF6B2301EE9400AF9CE4 /* CellFactory.swift in Sources */,
 				2CDEBF56230181A400AF9CE4 /* EmployeeListTableViewCell.swift in Sources */,
+				2CDEBF8323038E0300AF9CE4 /* AddNewEmployeeViewController.swift in Sources */,
 				2CDEBF662301BDC300AF9CE4 /* DataSource.swift in Sources */,
 				2CDEBF692301D27900AF9CE4 /* CoreDataManager.swift in Sources */,
 				2CDEBF632301BB2000AF9CE4 /* CoreDataStack.swift in Sources */,
 				2CDEBF33230166F800AF9CE4 /* AppDelegate.swift in Sources */,
+				2CDEBF86230392F300AF9CE4 /* Utils.swift in Sources */,
 				2CDEBF5A23019FDD00AF9CE4 /* NavigationFactory.swift in Sources */,
 				2CDEBF5E2301AAA300AF9CE4 /* EmployeeViewState.swift in Sources */,
 				2CDEBF762302091300AF9CE4 /* EditEmployeeViewController.swift in Sources */,
