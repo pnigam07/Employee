@@ -14,7 +14,7 @@ class CoreDataManger {
     func deleteAll(){
         let taskContext = CoreDataStack.shared.backgroundTaskContext()
         taskContext.performAndWait {
-            let matchingEpisodeRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Employee")
+            let matchingEpisodeRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Constants.employeeEntityname)
            
             let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: matchingEpisodeRequest)
             batchDeleteRequest.resultType = .resultTypeObjectIDs
@@ -43,7 +43,7 @@ class CoreDataManger {
         
         taskContext.performAndWait {
             
-        guard let emp =  NSEntityDescription.insertNewObject(forEntityName: "Employee", into: taskContext) as? Employee else {
+        guard let emp =  NSEntityDescription.insertNewObject(forEntityName: Constants.employeeEntityname, into: taskContext) as? Employee else {
                 print("Error: Failed to create a new Employee object!")
                 return
             }

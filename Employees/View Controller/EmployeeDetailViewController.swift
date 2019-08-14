@@ -8,13 +8,13 @@
 
 import UIKit
 
-class EditEmployeeViewController: UIViewController {
+class EmployeeDetailViewController: UIViewController {
     
     private lazy var cityPicker = UIPickerView()
     private lazy var marritalStatusPicker = UIPickerView()
     
     var viewState: EmployeeViewState? = nil
-    private let adaptor = EditEmployeeTableViewAdaptor()
+ 
     
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var nameTextField: UITextField!
@@ -23,56 +23,19 @@ class EditEmployeeViewController: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
     
     @IBOutlet weak var mariatalStatus: UILabel!
-    @IBOutlet weak var mariatalStatusTextField: UITextField! {
-        didSet {
-            marritalStatusPicker.dataSource = self
-            marritalStatusPicker.delegate = self
-            mariatalStatusTextField.inputView = marritalStatusPicker
-        }
-    }
-    
+    @IBOutlet weak var mariatalStatusTextField: UITextField!
+
     @IBOutlet weak var city: UILabel!
-    @IBOutlet weak var cityTextField: UITextField! {
-        didSet {
-            cityPicker.dataSource = self
-            cityPicker.delegate = self
-            cityTextField.inputView = cityPicker
-        }
-    }
-    
-    func validate() -> Bool {
-        if  nameTextField.text?.trimmingCharacters(in: .whitespaces).count ?? 0 < 6 {
-            return false
-        }
-        if !isValidEmail(emailStr: emailTextField.text ?? "") {
-            return false
-        }
-        if mariatalStatus.text == "" {
-            return false
-        }
-        if cityTextField.text?.trimmingCharacters(in: .whitespaces).count ?? 0 < 4 {
-            return false
-        }
-      
-        return true
-    }
-    
-    func isValidEmail(emailStr:String) -> Bool {
-        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-        
-        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        return emailPred.evaluate(with: emailStr)
-    }
-    
-    @objc func save() {
-        print("chal be")
-    }
+    @IBOutlet weak var cityTextField: UITextField!
 
     override func viewDidLoad() {
-        
-        navigationItem.rightBarButtonItem = NavigationBarFactory.setupBarButton(title: "Save",
-                                                                                target: self,
-                                                                                action: #selector(save))
+        super.viewDidLoad()
+       
+        self.title = "Employe Detail"
+        setUpView()
+    }
+    
+    func setUpView() {
         
         name.text = "Name: "
         email.text = "Email: "
@@ -84,14 +47,17 @@ class EditEmployeeViewController: UIViewController {
         mariatalStatusTextField.text = viewState?.married
         cityTextField.text = viewState?.city
         
+        nameTextField.isUserInteractionEnabled = false
+        emailTextField.isUserInteractionEnabled = false
+        mariatalStatusTextField.isUserInteractionEnabled = false
+        cityTextField.isUserInteractionEnabled = false
+        
     }
 }
 
-
-
 // MARK: UIPickerViewDelegate, UIPickerViewDataSource
 
-extension EditEmployeeViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+extension EmployeeDetailViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
        if pickerView == cityPicker || pickerView == marritalStatusPicker {
             return 1

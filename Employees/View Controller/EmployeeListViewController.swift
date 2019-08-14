@@ -40,7 +40,7 @@ class EmployeeListViewController: UIViewController {
     func setupNavigation() {
         self.navigationController?.navigationBar.backgroundColor = .green
         navigationItem.rightBarButtonItem = NavigationBarFactory.setupSystemBarButton(with: .add, target: self, action: #selector(moveToAdd))
-        self.title = "Employee List"
+        self.title = "Employees"
     }
     
     func setUpDelegates() {
@@ -75,9 +75,9 @@ class EmployeeListViewController: UIViewController {
         return vc
     }()
     
-    fileprivate lazy var editViewController: EditEmployeeViewController = {
+    fileprivate lazy var editViewController: EmployeeDetailViewController = {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc: EditEmployeeViewController = storyboard.instantiateViewController(withIdentifier: "editEmployee") as! EditEmployeeViewController
+        let vc: EmployeeDetailViewController = storyboard.instantiateViewController(withIdentifier: "editEmployee") as! EmployeeDetailViewController
         return vc
     }()
 }

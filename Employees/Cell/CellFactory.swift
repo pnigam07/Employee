@@ -10,7 +10,6 @@ import UIKit
 
 enum CellType {
     case EmployeeListCell
-
 }
 
 struct CellIdentifier {
@@ -23,9 +22,7 @@ struct CellIdentifier {
 }
 
 struct CellFactory {
-    
     static func cell(forIndexPath indexPath: IndexPath, forTableView tableView: UITableView) -> UITableViewCell{
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.type(cellType: .EmployeeListCell)) as? EmployeeListTableViewCell
         return cell!
     }

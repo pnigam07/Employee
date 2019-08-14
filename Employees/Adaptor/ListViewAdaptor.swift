@@ -16,15 +16,12 @@ protocol AdaptorDelegate {
 class ListViewAdaptor: NSObject {
     
     var delegate: AdaptorDelegate?
-    
     fileprivate var viewState = EmployeeViewStates.initialState()
     
     func update(viewState: EmployeeViewStates){
         self.viewState = viewState
     }
 }
-
-
 
 extension ListViewAdaptor: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

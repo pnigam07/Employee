@@ -67,6 +67,7 @@ class AddNewEmployeeViewController: UIViewController {
     }
     
     func setupNavigation(){
+        self.title = "Add Employee"
         navigationItem.rightBarButtonItem = NavigationBarFactory.setupBarButton(title: "Save",
                                                                                 target: self,
                                                                                 action: #selector(save))
@@ -77,6 +78,8 @@ class AddNewEmployeeViewController: UIViewController {
         email.text = "Email: "
         mariatalStatus.text = "Married: "
         city.text = "City: "
+        mariatalStatusTextField.text = Constants.marritialStatusArray.first
+        cityTextField.text = Constants.cityArray.first
     }
     
     func popViewController()  {
@@ -91,21 +94,6 @@ class AddNewEmployeeViewController: UIViewController {
                                             married: mariatalStatusTextField.text?.trimmingCharacters(in: .whitespaces) ?? "")
         
         self.viewModel.save(viewState: empViewState)
-        
-//        if isValidateData() {
-//            let dict = ["name":nameTextField.text!,
-//                        "email":emailTextField.text!,
-//                        "city":cityTextField.text!,
-//                        "married":mariatalStatus.text!]
-//            let cc =  CoreDataManger()
-//            cc.insertEmployee(employeeDict: dict)
-//            self.navigationController?.popViewController(animated: true)
-//        }
-//        else {
-//
-//            let alert = Utils.getAlert(withMessage: "Some thing is not right")
-//            self.present(alert, animated: true, completion: nil)
-//        }
     }
     
 }
@@ -114,11 +102,7 @@ extension AddNewEmployeeViewController: NewEmployeeDelegate{
     func recordAddedSuccessfully() {
         popViewController()
     }
-    
-    
 }
-
-
 
 // MARK: UIPickerViewDelegate, UIPickerViewDataSource
 
