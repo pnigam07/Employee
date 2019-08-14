@@ -12,9 +12,7 @@ class AddNewEmployeeViewController: UIViewController {
     
     private lazy var cityPicker = UIPickerView()
     private lazy var marritalStatusPicker = UIPickerView()
-    
-    var viewState: EmployeeViewState? = nil
-    private let adaptor = EditEmployeeTableViewAdaptor()
+    private var viewModel: AddNewEmployeeViewModel
     
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var nameTextField: UITextField!
@@ -40,11 +38,16 @@ class AddNewEmployeeViewController: UIViewController {
         }
     }
     
+    required init?(coder aDecoder: NSCoder) {
+        self.viewModel = AddNewEmployeeViewModel()
+        super.init(coder: aDecoder)
+    }
+    
     func isValidateData() -> Bool {
         if  nameTextField.text?.trimmingCharacters(in: .whitespaces).count ?? 0 < 6 {
             return false
         }
-        if !isValidEmail(emailStr: emailTextField.text ?? "") {
+        if !Utils.isValidEmail(emailStr: emailTextField.text ?? "") {
             return false
         }
         if mariatalStatus.text == "" {
@@ -57,40 +60,62 @@ class AddNewEmployeeViewController: UIViewController {
         return true
     }
     
-    func isValidEmail(emailStr:String) -> Bool {
-        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-        
-        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        return emailPred.evaluate(with: emailStr)
-    }
-    
-    @objc func save() {
-        if isValidateData() {
-            let dict = ["name":nameTextField.text!,
-                        "email":emailTextField.text!,
-                        "city":cityTextField.text!,
-                        "married":mariatalStatus.text!]
-            let cc =  CoreDataManger()
-            cc.insertEmployee(employeeDict: dict)
-            self.navigationController?.popViewController(animated: true)
-        }
-        else {
-       
-            let alert = Utils.getAlert(withMessage: "Some thing is not right")
-            self.present(alert, animated: true, completion: nil)
-        }
-    }
-    
     override func viewDidLoad() {
-        
+        setupNavigation()
+        setUpView()
+        self.viewModel.delegate = self
+    }
+    
+    func setupNavigation(){
         navigationItem.rightBarButtonItem = NavigationBarFactory.setupBarButton(title: "Save",
                                                                                 target: self,
                                                                                 action: #selector(save))
+    }
+    
+    func setUpView(){
         name.text = "Name: "
         email.text = "Email: "
         mariatalStatus.text = "Married: "
         city.text = "City: "
     }
+    
+    func popViewController()  {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func save() {
+        
+       let empViewState = EmployeeViewState(name: nameTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
+                                            email: emailTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
+                                            city: cityTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
+                                            married: mariatalStatusTextField.text?.trimmingCharacters(in: .whitespaces) ?? "")
+        
+        self.viewModel.save(viewState: empViewState)
+        
+//        if isValidateData() {
+//            let dict = ["name":nameTextField.text!,
+//                        "email":emailTextField.text!,
+//                        "city":cityTextField.text!,
+//                        "married":mariatalStatus.text!]
+//            let cc =  CoreDataManger()
+//            cc.insertEmployee(employeeDict: dict)
+//            self.navigationController?.popViewController(animated: true)
+//        }
+//        else {
+//
+//            let alert = Utils.getAlert(withMessage: "Some thing is not right")
+//            self.present(alert, animated: true, completion: nil)
+//        }
+    }
+    
+}
+
+extension AddNewEmployeeViewController: NewEmployeeDelegate{
+    func recordAddedSuccessfully() {
+        popViewController()
+    }
+    
+    
 }
 
 

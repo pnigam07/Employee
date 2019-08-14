@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C2F8C6C2303D621002F3358 /* PickerAdaptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2F8C6B2303D621002F3358 /* PickerAdaptor.swift */; };
+		2C2F8C6E2303DA24002F3358 /* AddNewEmployeeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2F8C6D2303DA24002F3358 /* AddNewEmployeeViewModel.swift */; };
 		2CDEBF33230166F800AF9CE4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDEBF32230166F800AF9CE4 /* AppDelegate.swift */; };
 		2CDEBF35230166F800AF9CE4 /* EmployeeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDEBF34230166F800AF9CE4 /* EmployeeListViewController.swift */; };
 		2CDEBF38230166F800AF9CE4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CDEBF36230166F800AF9CE4 /* Main.storyboard */; };
@@ -44,6 +46,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2C2F8C6B2303D621002F3358 /* PickerAdaptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerAdaptor.swift; sourceTree = "<group>"; };
+		2C2F8C6D2303DA24002F3358 /* AddNewEmployeeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewEmployeeViewModel.swift; sourceTree = "<group>"; };
 		2CDEBF2F230166F800AF9CE4 /* Employees.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Employees.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CDEBF32230166F800AF9CE4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2CDEBF34230166F800AF9CE4 /* EmployeeListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeListViewController.swift; sourceTree = "<group>"; };
@@ -193,6 +197,7 @@
 			children = (
 				2CDEBF5B2301A99A00AF9CE4 /* ListViewModel.swift */,
 				2CDEBF7E2303763200AF9CE4 /* EditViewModel.swift */,
+				2C2F8C6D2303DA24002F3358 /* AddNewEmployeeViewModel.swift */,
 			);
 			path = "View Model";
 			sourceTree = "<group>";
@@ -210,6 +215,7 @@
 			children = (
 				2CDEBF5723019C5000AF9CE4 /* ListViewAdaptor.swift */,
 				2CDEBF772302F31A00AF9CE4 /* EditEmployeeTableViewAdaptor.swift */,
+				2C2F8C6B2303D621002F3358 /* PickerAdaptor.swift */,
 			);
 			path = Adaptor;
 			sourceTree = "<group>";
@@ -353,8 +359,10 @@
 				2CDEBF662301BDC300AF9CE4 /* DataSource.swift in Sources */,
 				2CDEBF692301D27900AF9CE4 /* CoreDataManager.swift in Sources */,
 				2CDEBF632301BB2000AF9CE4 /* CoreDataStack.swift in Sources */,
+				2C2F8C6C2303D621002F3358 /* PickerAdaptor.swift in Sources */,
 				2CDEBF33230166F800AF9CE4 /* AppDelegate.swift in Sources */,
 				2CDEBF86230392F300AF9CE4 /* Utils.swift in Sources */,
+				2C2F8C6E2303DA24002F3358 /* AddNewEmployeeViewModel.swift in Sources */,
 				2CDEBF5A23019FDD00AF9CE4 /* NavigationFactory.swift in Sources */,
 				2CDEBF5E2301AAA300AF9CE4 /* EmployeeViewState.swift in Sources */,
 				2CDEBF762302091300AF9CE4 /* EditEmployeeViewController.swift in Sources */,

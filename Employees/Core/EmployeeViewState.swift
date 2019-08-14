@@ -26,15 +26,22 @@ extension EmployeeViewStates {
 
 struct EmployeeViewState {
     
-    let employee: Employee
+//    let employee: Employee
     
     public var name: String?
     public var email: String?
     public var city: String?
     public var married: String?
     
+    init(name: String?, email: String?, city: String?, married: String) {
+        self.name = name
+        self.email = email
+        self.city = city
+        self.married = married
+    }
+    
     init(employee: Employee) {
-        self.employee = employee
+   //     self.employee = employee
         
         self.name = employee.name
         self.email = employee.email

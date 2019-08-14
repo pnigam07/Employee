@@ -35,7 +35,7 @@ class CoreDataManger {
     }
     }
     
-    func insertEmployee(employeeDict: Dictionary<String, String>) {
+   static func insertEmployee(employeeViewState: EmployeeViewState) {
         
         let taskContext = CoreDataStack.shared.persistentContainer.newBackgroundContext()
         taskContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
@@ -49,7 +49,7 @@ class CoreDataManger {
             }
             
             do {
-                try emp.update(with:employeeDict)
+                try emp.update(with:employeeViewState)
             } catch {
                 print("Error: \(error)\nThe quake object will be deleted.")
                 taskContext.delete(emp)
