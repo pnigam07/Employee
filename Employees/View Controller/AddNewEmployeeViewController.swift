@@ -50,7 +50,7 @@ class AddNewEmployeeViewController: UIViewController {
     }
     
     func setupNavigation(){
-        self.title = "Add Employee"
+        self.title = Constants.NewEmployeePageTitle
         navigationItem.rightBarButtonItem = NavigationBarFactory.setupBarButton(title: "Save",
                                                                                 target: self,
                                                                                 action: #selector(save))
@@ -101,7 +101,7 @@ extension AddNewEmployeeViewController: NewEmployeeDelegate {
         case .success(_):
             popViewController()
         case .failure(let error):
-             Utils.showAlert(message: error.localizedDescription, title: "Status", viewController: self)
+             Utils.showAlert(message: error.localizedDescription, title: Constants.ErrorTitle, viewController: self)
         }
     }
 }

@@ -41,7 +41,7 @@ class EmployeeListViewController: UIViewController {
         navigationItem.rightBarButtonItem = NavigationBarFactory.setupSystemBarButton(with: .add,
                                                                                       target: self,
                                                                                       action: #selector(moveToAdd))
-        self.title = "Employees"
+        self.title = Constants.EmployeListViewTitle
     }
     
     func setUpDelegates() {

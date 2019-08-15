@@ -110,10 +110,10 @@ extension EmployeeDetailViewController: NewEmployeeDelegate{
     func recordUpdateStatus(result: Result<String, Error>) {
         switch result {
         case .success(let message):
-                Utils.showAlert(message: message, title: "Status", viewController: self)
+                Utils.showAlert(message: message, title: Constants.SuccessTitle, viewController: self)
         case .failure(let error):
             print(error)
-            Utils.showAlert(message: error.localizedDescription, title: "Status", viewController: self)
+            Utils.showAlert(message: error.localizedDescription, title: Constants.ErrorTitle, viewController: self)
         }
     }
 }
