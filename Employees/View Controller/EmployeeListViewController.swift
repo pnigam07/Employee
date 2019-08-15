@@ -62,16 +62,20 @@ class EmployeeListViewController: UIViewController {
         navigationController?.pushViewController(newEmployeeViewController, animated: true)
     }
    
-    fileprivate lazy var newEmployeeViewController: AddNewEmployeeViewController = {
+    fileprivate lazy var newEmployeeViewController: NewEmployeeViewController = {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc: AddNewEmployeeViewController = storyboard.instantiateViewController(withIdentifier: "newEmployee") as! AddNewEmployeeViewController
-        return vc
+        let vc: BaseEmployeeViewController = storyboard.instantiateViewController(withIdentifier: "newEmployee") as! BaseEmployeeViewController
+        object_setClass(vc, NewEmployeeViewController.self)
+        return vc as! NewEmployeeViewController
     }()
     
     fileprivate lazy var editViewController: EmployeeDetailViewController = {
+        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc: EmployeeDetailViewController = storyboard.instantiateViewController(withIdentifier: "editEmployee") as! EmployeeDetailViewController
-        return vc
+        let vc: BaseEmployeeViewController = storyboard.instantiateViewController(withIdentifier: "newEmployee") as! BaseEmployeeViewController
+        object_setClass(vc, EmployeeDetailViewController.self)
+        return vc as! EmployeeDetailViewController
+
     }()
 }
 

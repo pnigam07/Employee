@@ -1,26 +1,29 @@
 //
-//  AddNewEmployeeViewController.swift
+//  BaseEmployeeViewController.swift
 //  Employees
 //
-//  Created by pankaj on 8/14/19.
+//  Created by pankaj on 8/15/19.
 //  Copyright © 2019 Nigam. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
-class AddNewEmployeeViewController: UIViewController {
+class BaseEmployeeViewController: UIViewController {
     
     private lazy var cityPicker = UIPickerView()
     private lazy var marritalStatusPicker = UIPickerView()
-    private var viewModel: UpdateViewModel
+    var viewModel: UpdateViewModel
+    
+    var viewState: EmployeeViewState? = nil
+    private var toggleRightNavigationBar = false
     
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var nameTextField: UITextField!
-    
     @IBOutlet weak var email: UILabel!
     @IBOutlet weak var emailTextField: UITextField!
-    
     @IBOutlet weak var mariatalStatus: UILabel!
+    @IBOutlet weak var city: UILabel!
     @IBOutlet weak var mariatalStatusTextField: UITextField! {
         didSet {
             marritalStatusPicker.dataSource = self
@@ -29,8 +32,6 @@ class AddNewEmployeeViewController: UIViewController {
             mariatalStatusTextField.inputAccessoryView = Utils.getToolBar(doneAction: #selector(doneAction(sender:)), cancelAction: #selector(cancelAction(sender:)))
         }
     }
-    
-    @IBOutlet weak var city: UILabel!
     @IBOutlet weak var cityTextField: UITextField! {
         didSet {
             cityPicker.dataSource = self
@@ -44,19 +45,16 @@ class AddNewEmployeeViewController: UIViewController {
         self.viewModel = UpdateViewModel()
         super.init(coder: aDecoder)
     }
+}
+
+extension BaseEmployeeViewController {
     
-    override func viewDidLoad() {
-        setupNavigation()
-        setUpView()
-        self.viewModel.delegate = self
-    }
-    
-   @objc func doneAction(sender: UIBarButtonItem) {
+    @objc func doneAction(sender: UIBarButtonItem) {
         dismissPicker()
     }
     
     @objc func cancelAction(sender: UIBarButtonItem) {
-       dismissPicker()
+        dismissPicker()
     }
     
     private func dismissPicker()  {
@@ -67,50 +65,11 @@ class AddNewEmployeeViewController: UIViewController {
             cityTextField.resignFirstResponder()
         }
     }
-    
-    func setupNavigation(){
-        self.title = Constants.NewEmployeePageTitle
-        navigationItem.rightBarButtonItem = NavigationBarFactory.setupBarButton(title: "Save",
-                                                                                target: self,
-                                                                                action: #selector(save))
-    }
-    
-    func setUpView(){
-        name.text = "Name: "
-        email.text = "Email: "
-        mariatalStatus.text = "Married: "
-        city.text = "City: "
-        mariatalStatusTextField.text = Constants.marritialStatusArray.first
-        cityTextField.text = Constants.cityArray.first
-    }
-    
-    func popViewController()  {
-        navigationController?.popViewController(animated: true)
-    }
-    
-    @objc private func save() {
-       let empViewState = EmployeeViewState(name: nameTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
-                                            email: emailTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
-                                            city: cityTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
-                                            married: mariatalStatusTextField.text?.trimmingCharacters(in: .whitespaces) ?? "")
-        self.viewModel.save(viewState: empViewState)
-    }
-}
-
-extension AddNewEmployeeViewController: NewEmployeeDelegate {
-    func recordUpdateStatus(result: Result<String, Error>) {
-        switch result {
-        case .success(_):
-            popViewController()
-        case .failure(let error):
-             Utils.showAlert(message: error.localizedDescription, title: Constants.ErrorTitle, viewController: self)
-        }
-    }
 }
 
 // MARK: UIPickerViewDelegate, UIPickerViewDataSource
 
-extension AddNewEmployeeViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+extension BaseEmployeeViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         if pickerView == cityPicker || pickerView == marritalStatusPicker {
             return 1
@@ -149,4 +108,5 @@ extension AddNewEmployeeViewController: UIPickerViewDelegate, UIPickerViewDataSo
         }
     }
 }
+
 
