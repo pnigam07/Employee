@@ -280,10 +280,10 @@
             </objects>
             <point key="canvasLocation" x="47.826086956521742" y="724.55357142857144"/>
         </scene>
-        <!--Add New Employee View Controller-->
+        <!--Base Employee View Controller-->
         <scene sceneID="ohn-Fp-wAl">
             <objects>
-                <viewController storyboardIdentifier="newEmployee" useStoryboardIdentifierAsRestorationIdentifier="YES" id="TVq-X4-w0V" customClass="AddNewEmployeeViewController" customModule="Employees" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="newEmployee" useStoryboardIdentifierAsRestorationIdentifier="YES" id="TVq-X4-w0V" customClass="BaseEmployeeViewController" customModule="Employees" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1vv-Yv-pMA">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

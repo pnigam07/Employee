@@ -1,26 +1,29 @@
 //
-//  AddNewEmployeeViewController.swift
+//  EditEmployeeViewController.swift
 //  Employees
 //
-//  Created by pankaj on 8/14/19.
+//  Created by pankaj on 8/13/19.
 //  Copyright © 2019 Nigam. All rights reserved.
 //
 
 import UIKit
+import CoreData
 
-class AddNewEmployeeViewController: UIViewController {
+class EmployeeDetailViewController: UIViewController {
     
     private lazy var cityPicker = UIPickerView()
     private lazy var marritalStatusPicker = UIPickerView()
     private var viewModel: UpdateViewModel
     
+    var viewState: EmployeeViewState? = nil
+    private var toggleRightNavigationBar = false
+
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var nameTextField: UITextField!
-    
     @IBOutlet weak var email: UILabel!
     @IBOutlet weak var emailTextField: UITextField!
-    
     @IBOutlet weak var mariatalStatus: UILabel!
+    @IBOutlet weak var city: UILabel!
     @IBOutlet weak var mariatalStatusTextField: UITextField! {
         didSet {
             marritalStatusPicker.dataSource = self
@@ -29,8 +32,6 @@ class AddNewEmployeeViewController: UIViewController {
             mariatalStatusTextField.inputAccessoryView = Utils.getToolBar(doneAction: #selector(doneAction(sender:)), cancelAction: #selector(cancelAction(sender:)))
         }
     }
-    
-    @IBOutlet weak var city: UILabel!
     @IBOutlet weak var cityTextField: UITextField! {
         didSet {
             cityPicker.dataSource = self
@@ -41,22 +42,23 @@ class AddNewEmployeeViewController: UIViewController {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        self.viewModel = UpdateViewModel()
-        super.init(coder: aDecoder)
+         self.viewModel = UpdateViewModel()
+         super.init(coder: aDecoder)
     }
-    
+
     override func viewDidLoad() {
+        super.viewDidLoad()
+        self.viewModel.delegate = self
         setupNavigation()
         setUpView()
-        self.viewModel.delegate = self
     }
     
-   @objc func doneAction(sender: UIBarButtonItem) {
+    @objc func doneAction(sender: UIBarButtonItem) {
         dismissPicker()
     }
     
     @objc func cancelAction(sender: UIBarButtonItem) {
-       dismissPicker()
+        dismissPicker()
     }
     
     private func dismissPicker()  {
@@ -68,53 +70,76 @@ class AddNewEmployeeViewController: UIViewController {
         }
     }
     
-    func setupNavigation(){
-        self.title = Constants.NewEmployeePageTitle
-        navigationItem.rightBarButtonItem = NavigationBarFactory.setupBarButton(title: "Save",
-                                                                                target: self,
-                                                                                action: #selector(save))
+    func setupNavigation() {
+         self.title = "Employe Detail"
+         navigationItem.rightBarButtonItem = NavigationBarFactory.setupBarButton(title: "Edit", target: self, action: #selector(editAction(sender:)))
     }
     
-    func setUpView(){
+    @objc func editAction(sender: UIBarButtonItem){
+        
+        if (toggleRightNavigationBar){
+            let empViewState = EmployeeViewState(name: nameTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
+                                                 email: emailTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
+                                                 city: cityTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
+                                                 married: mariatalStatusTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
+                                                 objectId: viewState?.objectId ?? NSManagedObjectID())
+
+            viewModel.update(viewState: empViewState)
+            sender.title = "Edit"
+        }
+        else {
+                sender.title = "Save"
+        }
+        toggleRightNavigationBar = !toggleRightNavigationBar
+        toggleView(toEdit:toggleRightNavigationBar)
+    }
+    
+    private func toggleView(toEdit: Bool) {
+        nameTextField.isUserInteractionEnabled = toEdit
+        emailTextField.isUserInteractionEnabled = toEdit
+        mariatalStatusTextField.isUserInteractionEnabled = toEdit
+        cityTextField.isUserInteractionEnabled = toEdit
+    }
+    
+    private func setUpView() {
         name.text = "Name: "
         email.text = "Email: "
         mariatalStatus.text = "Married: "
         city.text = "City: "
-        mariatalStatusTextField.text = Constants.marritialStatusArray.first
-        cityTextField.text = Constants.cityArray.first
+        
+        nameTextField.text = viewState?.name
+        emailTextField.text = viewState?.email
+        mariatalStatusTextField.text = viewState?.married
+        cityTextField.text = viewState?.city
+        
+        toggleView(toEdit: false)
     }
     
-    func popViewController()  {
-        navigationController?.popViewController(animated: true)
-    }
-    
-    @objc private func save() {
-       let empViewState = EmployeeViewState(name: nameTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
-                                            email: emailTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
-                                            city: cityTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
-                                            married: mariatalStatusTextField.text?.trimmingCharacters(in: .whitespaces) ?? "")
-        self.viewModel.save(viewState: empViewState)
+    private func enableEditButton() {
+        navigationItem.rightBarButtonItem?.isEnabled = true
     }
 }
 
-extension AddNewEmployeeViewController: NewEmployeeDelegate {
+extension EmployeeDetailViewController: NewEmployeeDelegate{
+   
     func recordUpdateStatus(result: Result<String, Error>) {
         switch result {
-        case .success(_):
-            popViewController()
+        case .success(let message):
+                Utils.showAlert(message: message, title: Constants.SuccessTitle, viewController: self)
         case .failure(let error):
-             Utils.showAlert(message: error.localizedDescription, title: Constants.ErrorTitle, viewController: self)
+            print(error)
+            Utils.showAlert(message: error.localizedDescription, title: Constants.ErrorTitle, viewController: self)
         }
     }
 }
 
 // MARK: UIPickerViewDelegate, UIPickerViewDataSource
 
-extension AddNewEmployeeViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+extension EmployeeDetailViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        if pickerView == cityPicker || pickerView == marritalStatusPicker {
+       if pickerView == cityPicker || pickerView == marritalStatusPicker {
             return 1
-        }
+          }
         return 0
     }
     
@@ -149,4 +174,3 @@ extension AddNewEmployeeViewController: UIPickerViewDelegate, UIPickerViewDataSo
         }
     }
 }
-
