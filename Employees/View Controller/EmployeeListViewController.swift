@@ -33,7 +33,7 @@ class EmployeeListViewController: UIViewController {
         super.viewDidLoad()
         setupNavigation()
         setUpDelegates()
-    //    killThemAll()
+//        killThemAll()
     }
     
     func setupNavigation() {

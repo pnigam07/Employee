@@ -28,16 +28,20 @@ class BaseEmployeeViewController: UIViewController {
         didSet {
             marritalStatusPicker.dataSource = self
             marritalStatusPicker.delegate = self
+            mariatalStatusTextField.delegate = self
             mariatalStatusTextField.inputView = marritalStatusPicker
             mariatalStatusTextField.inputAccessoryView = Utils.getToolBar(doneAction: #selector(doneAction(sender:)), cancelAction: #selector(cancelAction(sender:)))
+          
         }
     }
     @IBOutlet weak var cityTextField: UITextField! {
         didSet {
             cityPicker.dataSource = self
             cityPicker.delegate = self
+             cityTextField.delegate = self
             cityTextField.inputView = cityPicker
             cityTextField.inputAccessoryView = Utils.getToolBar(doneAction: #selector(doneAction(sender:)), cancelAction: #selector(cancelAction(sender:)))
+           
         }
     }
     
@@ -45,6 +49,13 @@ class BaseEmployeeViewController: UIViewController {
         self.viewModel = UpdateViewModel()
         super.init(coder: aDecoder)
     }
+    override func viewDidAppear(_ animated: Bool) {
+        
+        super.viewDidAppear(true)
+        self.mariatalStatusTextField.resignFirstResponder()
+        self.cityTextField.resignFirstResponder()
+    }
+
 }
 
 extension BaseEmployeeViewController {
@@ -59,9 +70,13 @@ extension BaseEmployeeViewController {
     
     private func dismissPicker()  {
         if mariatalStatusTextField.isFirstResponder {
+           let selectedRow =  marritalStatusPicker.selectedRow(inComponent: 0)
+            mariatalStatusTextField.text = Constants.marritialStatusArray[selectedRow]
             mariatalStatusTextField.resignFirstResponder()
         }
         else if cityTextField.isFirstResponder {
+            let selectedRow =  cityPicker.selectedRow(inComponent: 0)
+            cityTextField.text = Constants.cityArray[selectedRow]
             cityTextField.resignFirstResponder()
         }
     }
@@ -105,6 +120,23 @@ extension BaseEmployeeViewController: UIPickerViewDelegate, UIPickerViewDataSour
         if pickerView == marritalStatusPicker {
             mariatalStatusTextField.text = Constants.marritialStatusArray[row]
             return
+        }
+    }
+}
+
+extension BaseEmployeeViewController : UITextFieldDelegate{
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if textField == mariatalStatusTextField {
+            if let status = viewState?.married {
+                guard let index = Constants.marritialStatusArray.firstIndex(of: status) else { return }
+                marritalStatusPicker.selectRow(index, inComponent: 0, animated: true)
+            }
+        }
+        if textField == cityTextField {
+            if let city = viewState?.city {
+                guard let index = Constants.cityArray.firstIndex(of: city) else { return }
+                cityPicker.selectRow(index, inComponent: 0, animated: true)
+            }
         }
     }
 }
