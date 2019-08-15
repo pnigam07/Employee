@@ -12,7 +12,7 @@ class AddNewEmployeeViewController: UIViewController {
     
     private lazy var cityPicker = UIPickerView()
     private lazy var marritalStatusPicker = UIPickerView()
-    private var viewModel: AddNewEmployeeViewModel
+    private var viewModel: UpdateViewModel
     
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var nameTextField: UITextField!
@@ -26,6 +26,7 @@ class AddNewEmployeeViewController: UIViewController {
             marritalStatusPicker.dataSource = self
             marritalStatusPicker.delegate = self
             mariatalStatusTextField.inputView = marritalStatusPicker
+            mariatalStatusTextField.inputAccessoryView = getToolBar()
         }
     }
     
@@ -35,12 +36,73 @@ class AddNewEmployeeViewController: UIViewController {
             cityPicker.dataSource = self
             cityPicker.delegate = self
             cityTextField.inputView = cityPicker
+            cityTextField.inputAccessoryView = getToolBar()
         }
     }
     
     required init?(coder aDecoder: NSCoder) {
-        self.viewModel = AddNewEmployeeViewModel()
+        self.viewModel = UpdateViewModel()
         super.init(coder: aDecoder)
+    }
+    
+    override func viewDidLoad() {
+        setupNavigation()
+        setUpView()
+        self.viewModel.delegate = self
+    }
+    
+    func getToolBar() -> UIToolbar {
+        let toolBar = UIToolbar()
+        toolBar.barStyle = .default
+        toolBar.isTranslucent = true
+        toolBar.tintColor = Constants.ButtonTinColor
+        toolBar.sizeToFit()
+        
+        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.plain, target: self, action: #selector(doneAction(sender:)))
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItem.Style.plain, target: self, action: #selector(cancelAction(sender:)))
+        
+        toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
+        toolBar.barTintColor = Constants.BarTinColor
+        toolBar.isUserInteractionEnabled = true
+        
+        return toolBar
+    }
+    
+    
+  
+   @objc func doneAction(sender: UIBarButtonItem) {
+        
+        dismissPicker()
+    }
+    
+    @objc func cancelAction(sender: UIBarButtonItem) {
+       dismissPicker()
+    }
+    
+    private func dismissPicker()  {
+        if mariatalStatusTextField.isFirstResponder {
+            mariatalStatusTextField.resignFirstResponder()
+        }
+        else if cityTextField.isFirstResponder {
+            cityTextField.resignFirstResponder()
+        }
+    }
+    
+    func setupNavigation(){
+        self.title = Constants.NewEmployeePageTitle
+        navigationItem.rightBarButtonItem = NavigationBarFactory.setupBarButton(title: "Save",
+                                                                                target: self,
+                                                                                action: #selector(save))
+    }
+    
+    func setUpView(){
+        name.text = "Name: "
+        email.text = "Email: "
+        mariatalStatus.text = "Married: "
+        city.text = "City: "
+        mariatalStatusTextField.text = Constants.marritialStatusArray.first
+        cityTextField.text = Constants.cityArray.first
     }
     
     func isValidateData() -> Bool {
@@ -56,30 +118,7 @@ class AddNewEmployeeViewController: UIViewController {
         if cityTextField.text?.trimmingCharacters(in: .whitespaces).count ?? 0 < 4 {
             return false
         }
-        
         return true
-    }
-    
-    override func viewDidLoad() {
-        setupNavigation()
-        setUpView()
-        self.viewModel.delegate = self
-    }
-    
-    func setupNavigation(){
-        self.title = "Add Employee"
-        navigationItem.rightBarButtonItem = NavigationBarFactory.setupBarButton(title: "Save",
-                                                                                target: self,
-                                                                                action: #selector(save))
-    }
-    
-    func setUpView(){
-        name.text = "Name: "
-        email.text = "Email: "
-        mariatalStatus.text = "Married: "
-        city.text = "City: "
-        mariatalStatusTextField.text = Constants.marritialStatusArray.first
-        cityTextField.text = Constants.cityArray.first
     }
     
     func popViewController()  {
@@ -92,15 +131,18 @@ class AddNewEmployeeViewController: UIViewController {
                                             email: emailTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
                                             city: cityTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
                                             married: mariatalStatusTextField.text?.trimmingCharacters(in: .whitespaces) ?? "")
-        
         self.viewModel.save(viewState: empViewState)
     }
-    
 }
 
-extension AddNewEmployeeViewController: NewEmployeeDelegate{
-    func recordAddedSuccessfully() {
-        popViewController()
+extension AddNewEmployeeViewController: NewEmployeeDelegate {
+    func recordUpdateStatus(result: Result<String, Error>) {
+        switch result {
+        case .success(_):
+            popViewController()
+        case .failure(let error):
+             Utils.showAlert(message: error.localizedDescription, title: Constants.ErrorTitle, viewController: self)
+        }
     }
 }
 

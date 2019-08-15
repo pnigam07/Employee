@@ -13,7 +13,7 @@ protocol ListViewModelDelegate {
     func updateViewState(viewState: EmployeeViewStates)
 }
 
-class ListViewModel: NSObject {
+class DisplayViewModel: NSObject {
     
     var dataSource: DataSource?
     var delegate:ListViewModelDelegate?
@@ -38,7 +38,7 @@ class ListViewModel: NSObject {
     }
 }
 
-extension ListViewModel: DataSourceDelegate {
+extension DisplayViewModel: DataSourceDelegate {
     func updateViewState() {
         guard let empList = fetchResult?.fetchedObjects else{
             print("No List from DB")
@@ -46,7 +46,5 @@ extension ListViewModel: DataSourceDelegate {
         }
         delegate?.updateViewState(viewState: viewStateFactory(employees: empList))
     }
-    
-    
 }
 

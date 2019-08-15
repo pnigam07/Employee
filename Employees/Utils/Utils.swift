@@ -17,9 +17,14 @@ class Utils {
         return emailPred.evaluate(with: emailStr)
     }
     
-    static func getAlert(withMessage message: String) -> UIAlertController {
+    static func showAlert(message: String, title: String, viewController: UIViewController){
+        let alert = Utils.getAlert(withMessage: message, title: title)
+        viewController.present(alert, animated: true, completion: nil)
+    }
     
-        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+    static func getAlert(withMessage message: String, title: String) -> UIAlertController {
+    
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
         switch action.style{
         case .default:
@@ -36,5 +41,23 @@ class Utils {
             }}))
         
         return alert
+    }
+    
+    static func getToolBar(doneAction:Selector?, cancelAction: Selector?) -> UIToolbar{
+        let toolBar = UIToolbar()
+        toolBar.barStyle = .default
+        toolBar.isTranslucent = true
+        toolBar.tintColor = Constants.ButtonTinColor
+        toolBar.sizeToFit()
+        
+        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.plain, target: nil, action: doneAction)
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItem.Style.plain, target: nil, action: cancelAction)
+        
+        toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
+        toolBar.barTintColor = Constants.BarTinColor
+        toolBar.isUserInteractionEnabled = true
+        
+        return toolBar
     }
 }

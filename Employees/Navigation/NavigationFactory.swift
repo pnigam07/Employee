@@ -31,14 +31,5 @@ class NavigationBarFactory: NSObject {
                                         action: action)
         return barButton
     }
-    
-    static func setuBackBarButtonWithTitle(title:String) -> UIBarButtonItem {
-        let barButton = UIBarButtonItem(
-            title: title,
-            style: .plain,
-            target: nil,
-            action: nil)
-        return barButton
-    }
 }
 

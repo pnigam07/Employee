@@ -13,7 +13,7 @@ protocol AdaptorDelegate {
      func navigatToEditView(viewState: EmployeeViewState)
 }
 
-class ListViewAdaptor: NSObject {
+class ListTableViewAdaptor: NSObject {
     
     var delegate: AdaptorDelegate?
     fileprivate var viewState = EmployeeViewStates.initialState()
@@ -23,13 +23,13 @@ class ListViewAdaptor: NSObject {
     }
 }
 
-extension ListViewAdaptor: UITableViewDelegate {
+extension ListTableViewAdaptor: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
        delegate?.navigatToEditView(viewState: viewState.employee[indexPath.row])
     }
 }
 
-extension ListViewAdaptor: UITableViewDataSource {
+extension ListTableViewAdaptor: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }

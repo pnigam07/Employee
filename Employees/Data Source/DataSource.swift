@@ -18,7 +18,7 @@ class DataSource: NSObject {
     private let persistentContainer: NSPersistentContainer
     var delegate: DataSourceDelegate?
     
-    var viewContext: NSManagedObjectContext {
+    private var viewContext: NSManagedObjectContext {
         return persistentContainer.viewContext
     }
     

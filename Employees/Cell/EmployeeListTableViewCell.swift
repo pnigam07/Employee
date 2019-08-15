@@ -15,7 +15,6 @@ class EmployeeListTableViewCell: UITableViewCell {
     @IBOutlet weak var status: UILabel!
     @IBOutlet weak var city: UILabel!
   
-    
     func update(viewState: EmployeeViewState){
         name.text = viewState.name
         email.text = viewState.email

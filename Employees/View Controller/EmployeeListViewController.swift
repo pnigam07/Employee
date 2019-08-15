@@ -15,17 +15,16 @@ class EmployeeListViewController: UIViewController {
     
     let context: NSPersistentContainer
     var dataSource: DataSource
-    var viewModel: ListViewModel
+    var viewModel: DisplayViewModel
     var viewState: EmployeeViewStates
-    var adaptor: ListViewAdaptor
+    var adaptor: ListTableViewAdaptor
 
     required init?(coder aDecoder: NSCoder) {
-        
         context = CoreDataStack.shared.persistentContainer
         viewState = EmployeeViewStates.initialState()
         dataSource = DataSource(persistentContainer: context)
-        viewModel = ListViewModel(dataSource: dataSource)
-        adaptor = ListViewAdaptor()
+        viewModel = DisplayViewModel(dataSource: dataSource)
+        adaptor = ListTableViewAdaptor()
         
         super.init(coder: aDecoder)
     }
@@ -39,8 +38,10 @@ class EmployeeListViewController: UIViewController {
     
     func setupNavigation() {
         self.navigationController?.navigationBar.backgroundColor = .green
-        navigationItem.rightBarButtonItem = NavigationBarFactory.setupSystemBarButton(with: .add, target: self, action: #selector(moveToAdd))
-        self.title = "Employees"
+        navigationItem.rightBarButtonItem = NavigationBarFactory.setupSystemBarButton(with: .add,
+                                                                                      target: self,
+                                                                                      action: #selector(moveToAdd))
+        self.title = Constants.EmployeListViewTitle
     }
     
     func setUpDelegates() {
@@ -57,16 +58,8 @@ class EmployeeListViewController: UIViewController {
         cc.deleteAll()
     }
     
-    func insert(){
-//        let dict = ["name":"pankaj","email":"aa@fd.com","city":"Bangalore", "married":"true"]
-//
-//        let cc =  CoreDataManger()
-//        cc.insertEmployee(employeeDict: dict)
-    }
-    
     @objc func moveToAdd() {
         navigationController?.pushViewController(newEmployeeViewController, animated: true)
-     //   insert()
     }
    
     fileprivate lazy var newEmployeeViewController: AddNewEmployeeViewController = {
@@ -83,7 +76,6 @@ class EmployeeListViewController: UIViewController {
 }
 
 extension EmployeeListViewController: AdaptorDelegate {
-    
     func navigatToEditView(viewState: EmployeeViewState) {
         editViewController.viewState = viewState
         navigationController?.pushViewController(editViewController, animated: true)
@@ -91,7 +83,6 @@ extension EmployeeListViewController: AdaptorDelegate {
 }
 
 extension EmployeeListViewController: ListViewModelDelegate {
-    
     func updateViewState(viewState: EmployeeViewStates) {
         self.viewState = viewState
         self.adaptor.update(viewState: viewState)
