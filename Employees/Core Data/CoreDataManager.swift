@@ -42,19 +42,41 @@ class CoreDataManger {
         taskContext.undoManager = nil
         
         taskContext.performAndWait {
-            
-        guard let emp =  NSEntityDescription.insertNewObject(forEntityName: Constants.employeeEntityname, into: taskContext) as? Employee else {
-                print("Error: Failed to create a new Employee object!")
-                return
-            }
-            
-            do {
-                try emp.update(with:employeeViewState)
-            } catch {
-                print("Error: \(error)\nThe quake object will be deleted.")
-                taskContext.delete(emp)
-            }
-        CoreDataStack.shared.save(context: taskContext)
+            guard let emp =  NSEntityDescription.insertNewObject(forEntityName: Constants.employeeEntityname, into: taskContext) as? Employee else {
+                    print("Error: Failed to create a new Employee object!")
+                    return
+                }
+                do {
+                    try emp.update(with:employeeViewState)
+                } catch {
+                    print("Error: \(error)\nThe quake object will be deleted.")
+                    taskContext.delete(emp)
+                }
+            CoreDataStack.shared.save(context: taskContext)
+        }
     }
+    
+    static func updateEmployeeRecord(emplyeeViewState: EmployeeViewState, completionBlock: (Result<String,Error>) -> Void){
+       
+        let taskContext = CoreDataStack.shared.backgroundTaskContext()
+        let fetchRequest = NSFetchRequest<Employee>(entityName:Constants.employeeEntityname)
+        let predicate = NSPredicate(format: "(self = %@)", emplyeeViewState.objectId ?? "0")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending:true)]
+        fetchRequest.predicate = predicate
+        
+        var empAsDict = emplyeeViewState.asDictionary
+        empAsDict.removeValue(forKey: "objectId")
+        
+        do {
+        let result = try taskContext.fetch(fetchRequest)
+            for item in result{
+                item.setValuesForKeys(empAsDict)
+            }
+        } catch {
+            completionBlock(.failure(error))
+        }
+      
+        CoreDataStack.shared.save(context: taskContext)
+        completionBlock(.success("Updated Successfully"))
     }
 }

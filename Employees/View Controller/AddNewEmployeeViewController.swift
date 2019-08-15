@@ -92,15 +92,20 @@ class AddNewEmployeeViewController: UIViewController {
                                             email: emailTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
                                             city: cityTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
                                             married: mariatalStatusTextField.text?.trimmingCharacters(in: .whitespaces) ?? "")
-        
         self.viewModel.save(viewState: empViewState)
     }
-    
 }
 
-extension AddNewEmployeeViewController: NewEmployeeDelegate{
-    func recordAddedSuccessfully() {
-        popViewController()
+extension AddNewEmployeeViewController: NewEmployeeDelegate {
+    func recordUpdateStatus(result: Result<String, Error>) {
+        switch result {
+        case .success(_):
+            popViewController()
+        case .failure(let error):
+            print(error)
+            let alert = Utils.getAlert(withMessage: "Some thing went wrong")
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 }
 

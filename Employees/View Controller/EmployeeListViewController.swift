@@ -57,16 +57,8 @@ class EmployeeListViewController: UIViewController {
         cc.deleteAll()
     }
     
-    func insert(){
-//        let dict = ["name":"pankaj","email":"aa@fd.com","city":"Bangalore", "married":"true"]
-//
-//        let cc =  CoreDataManger()
-//        cc.insertEmployee(employeeDict: dict)
-    }
-    
     @objc func moveToAdd() {
         navigationController?.pushViewController(newEmployeeViewController, animated: true)
-     //   insert()
     }
    
     fileprivate lazy var newEmployeeViewController: AddNewEmployeeViewController = {

@@ -9,8 +9,7 @@
 import Foundation
 
 protocol NewEmployeeDelegate {
-    //func recordAddedSuccessfully(result: Result<String,Error>)
-    func recordAddedSuccessfully()
+    func recordUpdateStatus(result : Result<String,Error>)
 }
 
 
@@ -23,7 +22,10 @@ class AddNewEmployeeViewModel {
         self.viewState = viewState
         if isValidateData(){
             CoreDataManger.insertEmployee(employeeViewState: viewState)
-            delegate?.recordAddedSuccessfully()
+            delegate?.recordUpdateStatus(result: .success("Record Added"))
+        }
+        else{
+            delegate?.recordUpdateStatus(result: .failure(NSError(domain: "something went wrong", code: 123, userInfo: nil)))
         }
     }
     

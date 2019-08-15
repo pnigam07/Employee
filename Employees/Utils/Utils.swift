@@ -17,6 +17,11 @@ class Utils {
         return emailPred.evaluate(with: emailStr)
     }
     
+    static func showAlert(message: String, viewController: UIViewController){
+        let alert = Utils.getAlert(withMessage: message)
+        viewController.present(alert, animated: true, completion: nil)
+    }
+    
     static func getAlert(withMessage message: String) -> UIAlertController {
     
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)

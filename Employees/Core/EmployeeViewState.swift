@@ -7,8 +7,7 @@
 //
 
 import Foundation
-
-import Foundation
+import CoreData
 
 struct EmployeeViewStates: Equatable {
     static func == (lhs: EmployeeViewStates, rhs: EmployeeViewStates) -> Bool {
@@ -26,8 +25,7 @@ extension EmployeeViewStates {
 
 struct EmployeeViewState {
     
-//    let employee: Employee
-    
+    public var objectId: NSManagedObjectID?
     public var name: String?
     public var email: String?
     public var city: String?
@@ -40,14 +38,31 @@ struct EmployeeViewState {
         self.married = married
     }
     
+    init(name: String?, email: String?, city: String?, married: String, objectId: NSManagedObjectID) {
+        self.name = name
+        self.email = email
+        self.city = city
+        self.married = married
+        self.objectId = objectId
+    }
+    
     init(employee: Employee) {
-   //     self.employee = employee
-        
+ 
+        self.objectId = employee.objectID
         self.name = employee.name
         self.email = employee.email
         self.city = employee.city
         self.married = employee.married
         
+    }
+    
+    var asDictionary : [String:Any] {
+        let mirror = Mirror(reflecting: self)
+        let dict = Dictionary(uniqueKeysWithValues: mirror.children.lazy.map({ (label:String?,value:Any) -> (String,Any)? in
+            guard label != nil else { return nil }
+            return (label!,value)
+        }).compactMap{ $0 })
+        return dict
     }
 }
 

@@ -33,6 +33,7 @@ class ListViewModel: NSObject {
     }
     
     func viewStateFactory(employees: [Employee]) -> EmployeeViewStates {
+      
         let allEmp = employees.map { EmployeeViewState(employee: $0) }
         return EmployeeViewStates(employee: allEmp)
     }

@@ -7,13 +7,16 @@
 //
 
 import UIKit
+import CoreData
 
 class EmployeeDetailViewController: UIViewController {
     
     private lazy var cityPicker = UIPickerView()
     private lazy var marritalStatusPicker = UIPickerView()
+    private var viewModel: AddNewEmployeeViewModel
     
     var viewState: EmployeeViewState? = nil
+    private var toggleRightNavigationBar = false
  
     
     @IBOutlet weak var name: UILabel!
@@ -23,19 +26,80 @@ class EmployeeDetailViewController: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
     
     @IBOutlet weak var mariatalStatus: UILabel!
-    @IBOutlet weak var mariatalStatusTextField: UITextField!
-
+    @IBOutlet weak var mariatalStatusTextField: UITextField! {
+        didSet {
+            marritalStatusPicker.dataSource = self
+            marritalStatusPicker.delegate = self
+            mariatalStatusTextField.inputView = marritalStatusPicker
+        }
+    }
     @IBOutlet weak var city: UILabel!
-    @IBOutlet weak var cityTextField: UITextField!
+    @IBOutlet weak var cityTextField: UITextField! {
+        didSet {
+            cityPicker.dataSource = self
+            cityPicker.delegate = self
+            cityTextField.inputView = cityPicker
+        }
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+         self.viewModel = AddNewEmployeeViewModel()
+         super.init(coder: aDecoder)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.viewModel.delegate = self
        
-        self.title = "Employe Detail"
+        setupNavigation()
         setUpView()
     }
     
-    func setUpView() {
+    func setupNavigation() {
+         self.title = "Employe Detail"
+         navigationItem.rightBarButtonItem = NavigationBarFactory.setupBarButton(title: "Edit", target: self, action: #selector(editAction(sender:)))
+    }
+    
+    @objc func editAction(sender: UIBarButtonItem) {
+        
+        if (toggleRightNavigationBar){
+            saveRecord()
+            sender.title = "Edit"
+        }
+        else {
+                sender.title = "Save"
+        }
+        toggleRightNavigationBar = !toggleRightNavigationBar
+        toggleView(toEdit:toggleRightNavigationBar)
+    }
+    
+    private func saveRecord() {
+        let empViewState = EmployeeViewState(name: nameTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
+                                             email: emailTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
+                                             city: cityTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
+                                             married: mariatalStatusTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
+                                             objectId: viewState?.objectId ?? NSManagedObjectID())
+        
+        CoreDataManger.updateEmployeeRecord(emplyeeViewState: empViewState) { (result) in
+            switch result{
+            case .success(let message):
+                    Utils.showAlert(message: message, viewController: self)
+            case .failure(let error):
+                Utils.showAlert(message: error.localizedDescription, viewController: self)
+            }
+            enableEditButton()
+        }
+        print("record saved")
+    }
+    
+    private func toggleView(toEdit: Bool) {
+        nameTextField.isUserInteractionEnabled = toEdit
+        emailTextField.isUserInteractionEnabled = toEdit
+        mariatalStatusTextField.isUserInteractionEnabled = toEdit
+        cityTextField.isUserInteractionEnabled = toEdit
+    }
+    
+    private func setUpView() {
         
         name.text = "Name: "
         email.text = "Email: "
@@ -47,11 +111,26 @@ class EmployeeDetailViewController: UIViewController {
         mariatalStatusTextField.text = viewState?.married
         cityTextField.text = viewState?.city
         
-        nameTextField.isUserInteractionEnabled = false
-        emailTextField.isUserInteractionEnabled = false
-        mariatalStatusTextField.isUserInteractionEnabled = false
-        cityTextField.isUserInteractionEnabled = false
-        
+        toggleView(toEdit: false)
+    }
+    
+    private func enableEditButton() {
+        navigationItem.rightBarButtonItem?.isEnabled = true
+    }
+}
+
+extension EmployeeDetailViewController: NewEmployeeDelegate{
+   
+    func recordUpdateStatus(result: Result<String, Error>) {
+        switch result {
+        case .success(_):
+                let alert = Utils.getAlert(withMessage: "Record Updated Succesfully")
+                self.present(alert, animated: true, completion: nil)
+        case .failure(let error):
+            print(error)
+            let alert = Utils.getAlert(withMessage: "Some thing went wrong")
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 }
 
