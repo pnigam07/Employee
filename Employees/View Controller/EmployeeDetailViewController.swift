@@ -13,7 +13,7 @@ class EmployeeDetailViewController: UIViewController {
     
     private lazy var cityPicker = UIPickerView()
     private lazy var marritalStatusPicker = UIPickerView()
-    private var viewModel: AddNewEmployeeViewModel
+    private var viewModel: UpdateViewModel
     
     var viewState: EmployeeViewState? = nil
     private var toggleRightNavigationBar = false
@@ -43,7 +43,7 @@ class EmployeeDetailViewController: UIViewController {
     }
     
     required init?(coder aDecoder: NSCoder) {
-         self.viewModel = AddNewEmployeeViewModel()
+         self.viewModel = UpdateViewModel()
          super.init(coder: aDecoder)
     }
 
@@ -63,7 +63,13 @@ class EmployeeDetailViewController: UIViewController {
     @objc func editAction(sender: UIBarButtonItem) {
         
         if (toggleRightNavigationBar){
-            saveRecord()
+            let empViewState = EmployeeViewState(name: nameTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
+                                                 email: emailTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
+                                                 city: cityTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
+                                                 married: mariatalStatusTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
+                                                 objectId: viewState?.objectId ?? NSManagedObjectID())
+
+            viewModel.update(viewState: empViewState)
             sender.title = "Edit"
         }
         else {
@@ -73,24 +79,24 @@ class EmployeeDetailViewController: UIViewController {
         toggleView(toEdit:toggleRightNavigationBar)
     }
     
-    private func saveRecord() {
-        let empViewState = EmployeeViewState(name: nameTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
-                                             email: emailTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
-                                             city: cityTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
-                                             married: mariatalStatusTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
-                                             objectId: viewState?.objectId ?? NSManagedObjectID())
-        
-        CoreDataManger.updateEmployeeRecord(emplyeeViewState: empViewState) { (result) in
-            switch result{
-            case .success(let message):
-                    Utils.showAlert(message: message, viewController: self)
-            case .failure(let error):
-                Utils.showAlert(message: error.localizedDescription, viewController: self)
-            }
-            enableEditButton()
-        }
-        print("record saved")
-    }
+//    private func saveRecord() {
+//        let empViewState = EmployeeViewState(name: nameTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
+//                                             email: emailTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
+//                                             city: cityTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
+//                                             married: mariatalStatusTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
+//                                             objectId: viewState?.objectId ?? NSManagedObjectID())
+////
+//        CoreDataManger.updateEmployeeRecord(emplyeeViewState: empViewState) { (result) in
+//            switch result{
+//            case .success(let message):
+//                    Utils.showAlert(message: message, viewController: self)
+//            case .failure(let error):
+//                Utils.showAlert(message: error.localizedDescription, viewController: self)
+//            }
+//            enableEditButton()
+//        }
+//        print("record saved")
+//    }
     
     private func toggleView(toEdit: Bool) {
         nameTextField.isUserInteractionEnabled = toEdit
@@ -123,13 +129,11 @@ extension EmployeeDetailViewController: NewEmployeeDelegate{
    
     func recordUpdateStatus(result: Result<String, Error>) {
         switch result {
-        case .success(_):
-                let alert = Utils.getAlert(withMessage: "Record Updated Succesfully")
-                self.present(alert, animated: true, completion: nil)
+        case .success(let message):
+                Utils.showAlert(message: message, title: "Status", viewController: self)
         case .failure(let error):
             print(error)
-            let alert = Utils.getAlert(withMessage: "Some thing went wrong")
-            self.present(alert, animated: true, completion: nil)
+            Utils.showAlert(message: error.localizedDescription, title: "Status", viewController: self)
         }
     }
 }

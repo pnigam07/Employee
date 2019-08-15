@@ -15,17 +15,17 @@ class EmployeeListViewController: UIViewController {
     
     let context: NSPersistentContainer
     var dataSource: DataSource
-    var viewModel: ListViewModel
+    var viewModel: DisplayViewModel
     var viewState: EmployeeViewStates
-    var adaptor: ListViewAdaptor
+    var adaptor: ListTableViewAdaptor
 
     required init?(coder aDecoder: NSCoder) {
         
         context = CoreDataStack.shared.persistentContainer
         viewState = EmployeeViewStates.initialState()
         dataSource = DataSource(persistentContainer: context)
-        viewModel = ListViewModel(dataSource: dataSource)
-        adaptor = ListViewAdaptor()
+        viewModel = DisplayViewModel(dataSource: dataSource)
+        adaptor = ListTableViewAdaptor()
         
         super.init(coder: aDecoder)
     }

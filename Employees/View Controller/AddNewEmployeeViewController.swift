@@ -12,7 +12,7 @@ class AddNewEmployeeViewController: UIViewController {
     
     private lazy var cityPicker = UIPickerView()
     private lazy var marritalStatusPicker = UIPickerView()
-    private var viewModel: AddNewEmployeeViewModel
+    private var viewModel: UpdateViewModel
     
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var nameTextField: UITextField!
@@ -39,7 +39,7 @@ class AddNewEmployeeViewController: UIViewController {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        self.viewModel = AddNewEmployeeViewModel()
+        self.viewModel = UpdateViewModel()
         super.init(coder: aDecoder)
     }
     
@@ -102,9 +102,7 @@ extension AddNewEmployeeViewController: NewEmployeeDelegate {
         case .success(_):
             popViewController()
         case .failure(let error):
-            print(error)
-            let alert = Utils.getAlert(withMessage: "Some thing went wrong")
-            self.present(alert, animated: true, completion: nil)
+             Utils.showAlert(message: error.localizedDescription, title: "Status", viewController: self)
         }
     }
 }

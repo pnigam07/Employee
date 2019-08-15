@@ -13,7 +13,7 @@ protocol NewEmployeeDelegate {
 }
 
 
-class AddNewEmployeeViewModel {
+class UpdateViewModel {
     
     var viewState: EmployeeViewState?
     var delegate: NewEmployeeDelegate?
@@ -26,6 +26,24 @@ class AddNewEmployeeViewModel {
         }
         else{
             delegate?.recordUpdateStatus(result: .failure(NSError(domain: "something went wrong", code: 123, userInfo: nil)))
+        }
+    }
+    
+    func update(viewState: EmployeeViewState){
+        self.viewState = viewState
+       if isValidateData(){
+            CoreDataManger.updateEmployeeRecord(emplyeeViewState: viewState) { (result) in
+                switch result{
+                case .success(let message):
+                        delegate?.recordUpdateStatus(result: .success(message))
+                case .failure(let error):
+                    delegate?.recordUpdateStatus(result: .failure(error))
+                }
+            }
+       }
+       else {
+            delegate?.recordUpdateStatus(result: .failure(NSError(domain: "All fields are mendatory",
+                                                                  code: 123, userInfo: nil)))
         }
     }
     

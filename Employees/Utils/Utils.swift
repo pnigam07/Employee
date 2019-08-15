@@ -17,14 +17,14 @@ class Utils {
         return emailPred.evaluate(with: emailStr)
     }
     
-    static func showAlert(message: String, viewController: UIViewController){
-        let alert = Utils.getAlert(withMessage: message)
+    static func showAlert(message: String, title: String, viewController: UIViewController){
+        let alert = Utils.getAlert(withMessage: message, title: title)
         viewController.present(alert, animated: true, completion: nil)
     }
     
-    static func getAlert(withMessage message: String) -> UIAlertController {
+    static func getAlert(withMessage message: String, title: String) -> UIAlertController {
     
-        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
         switch action.style{
         case .default:
