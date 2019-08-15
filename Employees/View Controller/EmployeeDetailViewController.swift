@@ -17,28 +17,27 @@ class EmployeeDetailViewController: UIViewController {
     
     var viewState: EmployeeViewState? = nil
     private var toggleRightNavigationBar = false
- 
-    
+
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var nameTextField: UITextField!
-    
     @IBOutlet weak var email: UILabel!
     @IBOutlet weak var emailTextField: UITextField!
-    
     @IBOutlet weak var mariatalStatus: UILabel!
+    @IBOutlet weak var city: UILabel!
     @IBOutlet weak var mariatalStatusTextField: UITextField! {
         didSet {
             marritalStatusPicker.dataSource = self
             marritalStatusPicker.delegate = self
             mariatalStatusTextField.inputView = marritalStatusPicker
+            mariatalStatusTextField.inputAccessoryView = Utils.getToolBar(doneAction: #selector(doneAction(sender:)), cancelAction: #selector(cancelAction(sender:)))
         }
     }
-    @IBOutlet weak var city: UILabel!
     @IBOutlet weak var cityTextField: UITextField! {
         didSet {
             cityPicker.dataSource = self
             cityPicker.delegate = self
             cityTextField.inputView = cityPicker
+            cityTextField.inputAccessoryView = Utils.getToolBar(doneAction: #selector(doneAction(sender:)), cancelAction: #selector(cancelAction(sender:)))
         }
     }
     
@@ -55,12 +54,29 @@ class EmployeeDetailViewController: UIViewController {
         setUpView()
     }
     
+    @objc func doneAction(sender: UIBarButtonItem) {
+        dismissPicker()
+    }
+    
+    @objc func cancelAction(sender: UIBarButtonItem) {
+        dismissPicker()
+    }
+    
+    private func dismissPicker()  {
+        if mariatalStatusTextField.isFirstResponder {
+            mariatalStatusTextField.resignFirstResponder()
+        }
+        else if cityTextField.isFirstResponder {
+            cityTextField.resignFirstResponder()
+        }
+    }
+    
     func setupNavigation() {
          self.title = "Employe Detail"
          navigationItem.rightBarButtonItem = NavigationBarFactory.setupBarButton(title: "Edit", target: self, action: #selector(editAction(sender:)))
     }
     
-    @objc func editAction(sender: UIBarButtonItem) {
+    @objc func editAction(sender: UIBarButtonItem){
         
         if (toggleRightNavigationBar){
             let empViewState = EmployeeViewState(name: nameTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",

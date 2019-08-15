@@ -42,4 +42,22 @@ class Utils {
         
         return alert
     }
+    
+    static func getToolBar(doneAction:Selector?, cancelAction: Selector?) -> UIToolbar{
+        let toolBar = UIToolbar()
+        toolBar.barStyle = .default
+        toolBar.isTranslucent = true
+        toolBar.tintColor = Constants.ButtonTinColor
+        toolBar.sizeToFit()
+        
+        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.plain, target: nil, action: doneAction)
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItem.Style.plain, target: nil, action: cancelAction)
+        
+        toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
+        toolBar.barTintColor = Constants.BarTinColor
+        toolBar.isUserInteractionEnabled = true
+        
+        return toolBar
+    }
 }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2C2F8C702304EB4E002F3358 /* UpdateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2F8C6F2304EB4E002F3358 /* UpdateViewModel.swift */; };
+		2C2F8C722304F095002F3358 /* CustomPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2F8C712304F095002F3358 /* CustomPickerView.swift */; };
 		2CDEBF33230166F800AF9CE4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDEBF32230166F800AF9CE4 /* AppDelegate.swift */; };
 		2CDEBF35230166F800AF9CE4 /* EmployeeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDEBF34230166F800AF9CE4 /* EmployeeListViewController.swift */; };
 		2CDEBF38230166F800AF9CE4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CDEBF36230166F800AF9CE4 /* Main.storyboard */; };
@@ -43,6 +44,7 @@
 
 /* Begin PBXFileReference section */
 		2C2F8C6F2304EB4E002F3358 /* UpdateViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateViewModel.swift; sourceTree = "<group>"; };
+		2C2F8C712304F095002F3358 /* CustomPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPickerView.swift; sourceTree = "<group>"; };
 		2CDEBF2F230166F800AF9CE4 /* Employees.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Employees.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CDEBF32230166F800AF9CE4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2CDEBF34230166F800AF9CE4 /* EmployeeListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeListViewController.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 				2CDEBF34230166F800AF9CE4 /* EmployeeListViewController.swift */,
 				2CDEBF752302091300AF9CE4 /* EmployeeDetailViewController.swift */,
 				2CDEBF8223038E0300AF9CE4 /* AddNewEmployeeViewController.swift */,
+				2C2F8C712304F095002F3358 /* CustomPickerView.swift */,
 			);
 			path = "View Controller";
 			sourceTree = "<group>";
@@ -335,6 +338,7 @@
 			files = (
 				2CDEBF3B230166F800AF9CE4 /* Employees.xcdatamodeld in Sources */,
 				2CDEBF7C2303460800AF9CE4 /* Constants.swift in Sources */,
+				2C2F8C722304F095002F3358 /* CustomPickerView.swift in Sources */,
 				2CDEBF602301B5B200AF9CE4 /* Employee.swift in Sources */,
 				2CDEBF35230166F800AF9CE4 /* EmployeeListViewController.swift in Sources */,
 				2CDEBF5C2301A99A00AF9CE4 /* ListViewModel.swift in Sources */,
