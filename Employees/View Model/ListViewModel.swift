@@ -33,7 +33,6 @@ class DisplayViewModel: NSObject {
     }
     
     func viewStateFactory(employees: [Employee]) -> EmployeeViewStates {
-      
         let allEmp = employees.map { EmployeeViewState(employee: $0) }
         return EmployeeViewStates(employee: allEmp)
     }
@@ -47,7 +46,5 @@ extension DisplayViewModel: DataSourceDelegate {
         }
         delegate?.updateViewState(viewState: viewStateFactory(employees: empList))
     }
-    
-    
 }
 

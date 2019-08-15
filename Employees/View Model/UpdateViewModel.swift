@@ -12,10 +12,9 @@ protocol NewEmployeeDelegate {
     func recordUpdateStatus(result : Result<String,Error>)
 }
 
-
 class UpdateViewModel {
     
-    var viewState: EmployeeViewState?
+    private var viewState: EmployeeViewState?
     var delegate: NewEmployeeDelegate?
     
     func save(viewState: EmployeeViewState) {

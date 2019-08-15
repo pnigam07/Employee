@@ -79,25 +79,6 @@ class EmployeeDetailViewController: UIViewController {
         toggleView(toEdit:toggleRightNavigationBar)
     }
     
-//    private func saveRecord() {
-//        let empViewState = EmployeeViewState(name: nameTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
-//                                             email: emailTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
-//                                             city: cityTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
-//                                             married: mariatalStatusTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
-//                                             objectId: viewState?.objectId ?? NSManagedObjectID())
-////
-//        CoreDataManger.updateEmployeeRecord(emplyeeViewState: empViewState) { (result) in
-//            switch result{
-//            case .success(let message):
-//                    Utils.showAlert(message: message, viewController: self)
-//            case .failure(let error):
-//                Utils.showAlert(message: error.localizedDescription, viewController: self)
-//            }
-//            enableEditButton()
-//        }
-//        print("record saved")
-//    }
-    
     private func toggleView(toEdit: Bool) {
         nameTextField.isUserInteractionEnabled = toEdit
         emailTextField.isUserInteractionEnabled = toEdit
@@ -106,7 +87,6 @@ class EmployeeDetailViewController: UIViewController {
     }
     
     private func setUpView() {
-        
         name.text = "Name: "
         email.text = "Email: "
         mariatalStatus.text = "Married: "

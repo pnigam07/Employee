@@ -20,7 +20,6 @@ class EmployeeListViewController: UIViewController {
     var adaptor: ListTableViewAdaptor
 
     required init?(coder aDecoder: NSCoder) {
-        
         context = CoreDataStack.shared.persistentContainer
         viewState = EmployeeViewStates.initialState()
         dataSource = DataSource(persistentContainer: context)
@@ -39,7 +38,9 @@ class EmployeeListViewController: UIViewController {
     
     func setupNavigation() {
         self.navigationController?.navigationBar.backgroundColor = .green
-        navigationItem.rightBarButtonItem = NavigationBarFactory.setupSystemBarButton(with: .add, target: self, action: #selector(moveToAdd))
+        navigationItem.rightBarButtonItem = NavigationBarFactory.setupSystemBarButton(with: .add,
+                                                                                      target: self,
+                                                                                      action: #selector(moveToAdd))
         self.title = "Employees"
     }
     
@@ -75,7 +76,6 @@ class EmployeeListViewController: UIViewController {
 }
 
 extension EmployeeListViewController: AdaptorDelegate {
-    
     func navigatToEditView(viewState: EmployeeViewState) {
         editViewController.viewState = viewState
         navigationController?.pushViewController(editViewController, animated: true)
@@ -83,7 +83,6 @@ extension EmployeeListViewController: AdaptorDelegate {
 }
 
 extension EmployeeListViewController: ListViewModelDelegate {
-    
     func updateViewState(viewState: EmployeeViewStates) {
         self.viewState = viewState
         self.adaptor.update(viewState: viewState)

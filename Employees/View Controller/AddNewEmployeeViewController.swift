@@ -43,23 +43,6 @@ class AddNewEmployeeViewController: UIViewController {
         super.init(coder: aDecoder)
     }
     
-    func isValidateData() -> Bool {
-        if  nameTextField.text?.trimmingCharacters(in: .whitespaces).count ?? 0 < 6 {
-            return false
-        }
-        if !Utils.isValidEmail(emailStr: emailTextField.text ?? "") {
-            return false
-        }
-        if mariatalStatus.text == "" {
-            return false
-        }
-        if cityTextField.text?.trimmingCharacters(in: .whitespaces).count ?? 0 < 4 {
-            return false
-        }
-        
-        return true
-    }
-    
     override func viewDidLoad() {
         setupNavigation()
         setUpView()
@@ -80,6 +63,22 @@ class AddNewEmployeeViewController: UIViewController {
         city.text = "City: "
         mariatalStatusTextField.text = Constants.marritialStatusArray.first
         cityTextField.text = Constants.cityArray.first
+    }
+    
+    func isValidateData() -> Bool {
+        if  nameTextField.text?.trimmingCharacters(in: .whitespaces).count ?? 0 < 6 {
+            return false
+        }
+        if !Utils.isValidEmail(emailStr: emailTextField.text ?? "") {
+            return false
+        }
+        if mariatalStatus.text == "" {
+            return false
+        }
+        if cityTextField.text?.trimmingCharacters(in: .whitespaces).count ?? 0 < 4 {
+            return false
+        }
+        return true
     }
     
     func popViewController()  {
