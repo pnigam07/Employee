@@ -26,7 +26,7 @@ class AddNewEmployeeViewController: UIViewController {
             marritalStatusPicker.dataSource = self
             marritalStatusPicker.delegate = self
             mariatalStatusTextField.inputView = marritalStatusPicker
-            mariatalStatusTextField.inputAccessoryView = getToolBar()
+            mariatalStatusTextField.inputAccessoryView = Utils.getToolBar(doneAction: #selector(doneAction(sender:)), cancelAction: #selector(cancelAction(sender:)))
         }
     }
     
@@ -36,7 +36,7 @@ class AddNewEmployeeViewController: UIViewController {
             cityPicker.dataSource = self
             cityPicker.delegate = self
             cityTextField.inputView = cityPicker
-            cityTextField.inputAccessoryView = getToolBar()
+            cityTextField.inputAccessoryView = Utils.getToolBar(doneAction: #selector(doneAction(sender:)), cancelAction: #selector(cancelAction(sender:)))
         }
     }
     
@@ -51,28 +51,7 @@ class AddNewEmployeeViewController: UIViewController {
         self.viewModel.delegate = self
     }
     
-    func getToolBar() -> UIToolbar {
-        let toolBar = UIToolbar()
-        toolBar.barStyle = .default
-        toolBar.isTranslucent = true
-        toolBar.tintColor = Constants.ButtonTinColor
-        toolBar.sizeToFit()
-        
-        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.plain, target: self, action: #selector(doneAction(sender:)))
-        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
-        let cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItem.Style.plain, target: self, action: #selector(cancelAction(sender:)))
-        
-        toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
-        toolBar.barTintColor = Constants.BarTinColor
-        toolBar.isUserInteractionEnabled = true
-        
-        return toolBar
-    }
-    
-    
-  
    @objc func doneAction(sender: UIBarButtonItem) {
-        
         dismissPicker()
     }
     
@@ -125,8 +104,7 @@ class AddNewEmployeeViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    @objc func save() {
-        
+    @objc private func save() {
        let empViewState = EmployeeViewState(name: nameTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
                                             email: emailTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
                                             city: cityTextField.text?.trimmingCharacters(in: .whitespaces) ?? "",
