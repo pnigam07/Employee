@@ -19,10 +19,10 @@ class Utils {
     
     static func showAlert(message: String, title: String, viewController: UIViewController){
         let alert = Utils.getAlert(withMessage: message, title: title)
-        let submitAction = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
            viewController.navigationController?.popViewController(animated: true)
         })
-        alert.addAction(submitAction)
+        alert.addAction(okAction)
         viewController.present(alert, animated: true, completion: nil)
     }
     
