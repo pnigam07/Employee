@@ -14,15 +14,11 @@ class NewEmployeeViewController: BaseEmployeeViewController {
         setupNavigation()
         setUpView()
         self.viewModel.delegate = self
-        nameTextField.text = nil
-        emailTextField.text = nil
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        nameTextField.text = nil
-        emailTextField.text = nil
-        
+
     }
     
     func setupNavigation(){
@@ -45,8 +41,6 @@ class NewEmployeeViewController: BaseEmployeeViewController {
         email.text = "Email: "
         mariatalStatus.text = "Married: "
         city.text = "City: "
-        nameTextField.text = nil
-        emailTextField.text = nil
         mariatalStatusTextField.text = Constants.marritialStatusArray.first
         cityTextField.text = Constants.cityArray.first
     }

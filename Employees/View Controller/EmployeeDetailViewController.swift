@@ -20,7 +20,7 @@ class EmployeeDetailViewController: BaseEmployeeViewController {
         setupNavigation()
         setUpView()
     }
-    
+
     func setupNavigation() {
         self.title = "Employe Detail"
         navigationItem.rightBarButtonItem = NavigationBarFactory.setupBarButton(title: "Edit", target: self, action: #selector(editAction(sender:)))
