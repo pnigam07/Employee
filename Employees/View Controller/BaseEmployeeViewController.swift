@@ -55,7 +55,6 @@ class BaseEmployeeViewController: UIViewController {
         self.mariatalStatusTextField.resignFirstResponder()
         self.cityTextField.resignFirstResponder()
     }
-
 }
 
 extension BaseEmployeeViewController {

@@ -59,30 +59,33 @@ class EmployeeListViewController: UIViewController {
     }
     
     @objc func moveToAdd() {
-        navigationController?.pushViewController(newEmployeeViewController, animated: true)
+        
+        navigationController?.pushViewController(newEmployeeViewController(), animated: true)
     }
    
-    fileprivate lazy var newEmployeeViewController: NewEmployeeViewController = {
+    fileprivate func newEmployeeViewController() -> NewEmployeeViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc: BaseEmployeeViewController = storyboard.instantiateViewController(withIdentifier: "newEmployee") as! BaseEmployeeViewController
         object_setClass(vc, NewEmployeeViewController.self)
         return vc as! NewEmployeeViewController
-    }()
+    }
     
-    fileprivate lazy var editViewController: EmployeeDetailViewController = {
+    fileprivate func editViewController() -> EmployeeDetailViewController  {
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc: BaseEmployeeViewController = storyboard.instantiateViewController(withIdentifier: "newEmployee") as! BaseEmployeeViewController
         object_setClass(vc, EmployeeDetailViewController.self)
         return vc as! EmployeeDetailViewController
 
-    }()
+    }
 }
 
 extension EmployeeListViewController: AdaptorDelegate {
     func navigatToEditView(viewState: EmployeeViewState) {
-        editViewController.viewState = viewState
-        navigationController?.pushViewController(editViewController, animated: true)
+        
+      let edit =  editViewController()
+        edit.viewState = viewState
+        navigationController?.pushViewController(edit, animated: true)
     }
 }
 
